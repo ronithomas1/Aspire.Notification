@@ -1,4 +1,7 @@
 
+using Microsoft.AspNetCore.Diagnostics;
+using System.Diagnostics;
+
 namespace Aspire.Notification.Api;
 
 public class Program
@@ -9,6 +12,21 @@ public class Program
         builder.AddServiceDefaults();
 
         // Add services to the container.
+        builder.Services.AddProblemDetails(opts => // built-in problem details support
+            opts.CustomizeProblemDetails = (ctx) =>
+            {
+                if (!ctx.ProblemDetails.Extensions.ContainsKey("traceId"))
+                {
+                    string? traceId = Activity.Current?.Id ?? ctx.HttpContext.TraceIdentifier;
+                    ctx.ProblemDetails.Extensions.Add(new KeyValuePair<string, object?>("traceId", traceId));
+                }
+                var exception = ctx.HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+                if (ctx.ProblemDetails.Status == 500)
+                {
+                    ctx.ProblemDetails.Detail = "An error occurred in our API. Use the trace id when contacting us.";
+                }
+            }
+          );
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

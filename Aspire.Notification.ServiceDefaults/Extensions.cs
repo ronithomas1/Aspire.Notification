@@ -38,6 +38,7 @@ namespace Microsoft.Extensions.Hosting
             //     options.AllowedSchemes = ["https"];
             // });
 
+
             return builder;
         }
 
