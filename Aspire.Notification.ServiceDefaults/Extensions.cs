@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.ServiceDiscovery;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using System.Diagnostics;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -38,7 +40,21 @@ namespace Microsoft.Extensions.Hosting
             //     options.AllowedSchemes = ["https"];
             // });
 
-
+            builder.Services.AddProblemDetails(opts => // built-in problem details support
+             opts.CustomizeProblemDetails = (ctx) =>
+             {
+                 if (!ctx.ProblemDetails.Extensions.ContainsKey("traceId"))
+                 {
+                     string? traceId = Activity.Current?.Id ?? ctx.HttpContext.TraceIdentifier;
+                     ctx.ProblemDetails.Extensions.Add(new KeyValuePair<string, object?>("traceId", traceId));
+                 }
+                 var exception = ctx.HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+                 if (ctx.ProblemDetails.Status == 500)
+                 {
+                     ctx.ProblemDetails.Detail = "An error occurred in our API. Use the trace id when contacting us.";
+                 }
+             }
+           );
             return builder;
         }
 
