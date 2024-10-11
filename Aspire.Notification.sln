@@ -5,9 +5,15 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Notification.AppHost", "Aspire.Notification.AppHost\Aspire.Notification.AppHost.csproj", "{32AF7B1B-854A-4AD4-A7AE-669D1BEFB53D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Notification.ServiceDefaults", "Aspire.Notification.ServiceDefaults\Aspire.Notification.ServiceDefaults.csproj", "{6A84FD88-4C31-417D-88D0-E854BB15BE5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Notification.ServiceDefaults", "Aspire.Notification.ServiceDefaults\Aspire.Notification.ServiceDefaults.csproj", "{6A84FD88-4C31-417D-88D0-E854BB15BE5E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Notification.Api", "Aspire.Notification.Api\Aspire.Notification.Api.csproj", "{FB71448E-9C58-450D-A6EB-AF880F14B58B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Notification.Application", "Aspire.Notification.Application\Aspire.Notification.Application.csproj", "{24AB56CC-C6C7-44E8-A2FC-CA5804DFC9A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Notification.Infrastructure", "Aspire.Notification.Infrastructure\Aspire.Notification.Infrastructure.csproj", "{C69DC801-28A1-4D7A-8C58-36ADC10B1662}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Notification.Domain", "Aspire.Notification.Domain\Aspire.Notification.Domain.csproj", "{C39ADBD0-7B3B-49A9-A578-660815ECB723}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{FB71448E-9C58-450D-A6EB-AF880F14B58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB71448E-9C58-450D-A6EB-AF880F14B58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB71448E-9C58-450D-A6EB-AF880F14B58B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24AB56CC-C6C7-44E8-A2FC-CA5804DFC9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AB56CC-C6C7-44E8-A2FC-CA5804DFC9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AB56CC-C6C7-44E8-A2FC-CA5804DFC9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AB56CC-C6C7-44E8-A2FC-CA5804DFC9A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C69DC801-28A1-4D7A-8C58-36ADC10B1662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C69DC801-28A1-4D7A-8C58-36ADC10B1662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C69DC801-28A1-4D7A-8C58-36ADC10B1662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C69DC801-28A1-4D7A-8C58-36ADC10B1662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39ADBD0-7B3B-49A9-A578-660815ECB723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39ADBD0-7B3B-49A9-A578-660815ECB723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39ADBD0-7B3B-49A9-A578-660815ECB723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39ADBD0-7B3B-49A9-A578-660815ECB723}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
