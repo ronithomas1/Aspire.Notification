@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aspire.Notification.Api\Aspire.Notification.Api.csproj" />
+    <ProjectReference Include="..\Aspire.Notification.Migrations.Worker\Aspire.Notification.Migrations.Worker.csproj" />
   </ItemGroup>
 
 </Project>

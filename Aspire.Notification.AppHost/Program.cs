@@ -12,4 +12,8 @@ var sqlDatabase = sqlServer.AddDatabase("Aspire-Notification");
 var smtp = builder.AddSmtp4Dev("SmtpUri");
 builder.AddProject<Projects.Aspire_Notification_Api>("aspire-notification-api");
 
+builder.AddProject<Projects.Aspire_Notification_Migrations_Worker>
+    ("aspire-notification-migrations-worker")
+    .WithReference(sqlDatabase);
+
 builder.Build().Run();
