@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Aspire.Notification.Infrastructure
@@ -10,21 +11,17 @@ namespace Aspire.Notification.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(
        this IServiceCollection services,
-       IConfiguration configuration) =>
+       IConfiguration configuration,
+       IHostApplicationBuilder builder) =>
        services
-           .AddDatabase(configuration);
+           .AddDatabase(configuration, builder);
 
-        private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+        private static IServiceCollection AddDatabase(this IServiceCollection services, 
+            IConfiguration configuration, IHostApplicationBuilder builder)
         {
-            string? connection = configuration.GetConnectionString("AspireContextConnection");
-
-            services.AddDbContext<AspireContext>(
-             options =>
-             {
-                 options.UseSqlServer(connection);
-             });
-
-            return services;
+            // This is the name of the sqlDatabase in AppHost
+            builder.AddSqlServerDbContext<AspireContext>("Aspire-Notification");
+            return builder.Services;
         }
     }
 }

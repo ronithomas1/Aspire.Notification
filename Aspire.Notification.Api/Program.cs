@@ -1,5 +1,3 @@
-
-using Aspire.Notification.Api.Extensions;
 using Aspire.Notification.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Diagnostics;
@@ -21,7 +19,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services  
-            .AddInfrastructure(builder.Configuration);
+            .AddInfrastructure(builder.Configuration, builder);
 
         var app = builder.Build();
 
@@ -32,7 +30,6 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.ApplyMigrations();
         }
 
         app.UseHttpsRedirection();
