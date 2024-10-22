@@ -1,3 +1,4 @@
+using Aspire.Notification.Application;
 using Aspire.Notification.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Diagnostics;
@@ -20,6 +21,8 @@ public class Program
 
         builder.Services  
             .AddInfrastructure(builder.Configuration, builder);
+        builder.Services
+            .AddApplicationServices();
 
         var app = builder.Build();
 
