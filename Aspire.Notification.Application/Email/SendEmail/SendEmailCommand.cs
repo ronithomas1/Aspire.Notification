@@ -9,6 +9,6 @@ namespace Aspire.Notification.Application.Email.SendEmail
 {
     public  record SendEmailCommand: IRequest<Unit>
     {
-        public required SendEmailDto  SendEmail { get; set; }
+        public required SendEmailRequest  SendEmail { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aspire.Notification.Application.Email.SendEmail
 {
-    public class SendEmailDto
+    public class SendEmailRequest
     {
     }
 }
