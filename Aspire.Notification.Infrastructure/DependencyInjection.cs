@@ -1,4 +1,5 @@
 ﻿using Aspire.Notification.Infrastructure.Database;
+using Aspire.Notification.Infrastructure.Email;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,12 +10,13 @@ namespace Aspire.Notification.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(
+       public static IServiceCollection AddInfrastructureServices(
        this IServiceCollection services,
        IConfiguration configuration,
-       IHostApplicationBuilder builder) =>
+       IHostApplicationBuilder builder, bool isDevelopment) =>
        services
-           .AddDatabase(configuration, builder);
+           .AddDatabase(configuration, builder)
+           .AddEmail();
 
         private static IServiceCollection AddDatabase(this IServiceCollection services, 
             IConfiguration configuration, IHostApplicationBuilder builder)
@@ -22,6 +24,12 @@ namespace Aspire.Notification.Infrastructure
             // This is the name of the sqlDatabase in AppHost
             builder.AddSqlServerDbContext<AspireContext>("Aspire-Notification");
             return builder.Services;
+        }
+
+        private static IServiceCollection AddEmail(this IServiceCollection services)
+        {
+            services.AddScoped<IEmailSender, SmtpEmailSender>();
+            return services;
         }
     }
 }

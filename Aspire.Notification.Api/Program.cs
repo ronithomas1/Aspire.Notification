@@ -20,7 +20,8 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services  
-            .AddInfrastructure(builder.Configuration, builder);
+            .AddInfrastructureServices(builder.Configuration, builder,
+            builder.Environment.IsDevelopment());
         builder.Services
             .AddApplicationServices();
 

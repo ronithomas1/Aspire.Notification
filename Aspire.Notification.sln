@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Notification.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aspire.Notification.Migrations.Worker", "Aspire.Notification.Migrations.Worker\Aspire.Notification.Migrations.Worker.csproj", "{43D10753-B121-4FDC-806F-20C91384D634}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Notification.Core", "Aspire.Notification.Core\Aspire.Notification.Core.csproj", "{A8A03032-44AA-4443-AD91-4FA4F49AF0C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{43D10753-B121-4FDC-806F-20C91384D634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43D10753-B121-4FDC-806F-20C91384D634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43D10753-B121-4FDC-806F-20C91384D634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8A03032-44AA-4443-AD91-4FA4F49AF0C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8A03032-44AA-4443-AD91-4FA4F49AF0C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8A03032-44AA-4443-AD91-4FA4F49AF0C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8A03032-44AA-4443-AD91-4FA4F49AF0C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
