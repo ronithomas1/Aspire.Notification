@@ -1,4 +1,4 @@
-﻿using Aspire.Notification.Application.Email.SendEmail;
+﻿using Aspire.Notification.Application.Email.Commands.SendEmail;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

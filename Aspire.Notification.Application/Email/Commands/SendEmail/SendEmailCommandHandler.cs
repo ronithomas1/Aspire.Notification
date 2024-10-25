@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aspire.Notification.Application.Email.SendEmail
+namespace Aspire.Notification.Application.Email.Commands.SendEmail
 {
     public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand, Unit>
     {

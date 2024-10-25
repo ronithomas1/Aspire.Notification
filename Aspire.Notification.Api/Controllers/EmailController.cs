@@ -1,4 +1,4 @@
-﻿using Aspire.Notification.Application.Email.SendEmail;
+﻿using Aspire.Notification.Application.Email.Commands.SendEmail;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
