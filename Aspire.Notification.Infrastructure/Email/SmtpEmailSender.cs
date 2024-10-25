@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using Aspire.Notification.Application.Common.Interfaces;
+using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Aspire.Notification.Infrastructure.Email
             _client = new() { Host = smtpUri.Host, Port = smtpUri.Port };
         }
         public async Task SendEmailAsync(string from, List<string> to, List<string> cc, 
-            List<string> bcc, string subject, string body, string displayName = null)
+            List<string> bcc, string subject, string body, string? displayName = null)
         {
             string toEmail = string.Join(';', to);
             string ccEmail = string.Join(';', cc);

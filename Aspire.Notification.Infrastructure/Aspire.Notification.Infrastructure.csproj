@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aspire.Notification.Domain\Aspire.Notification.Domain.csproj" />
+    <ProjectReference Include="..\Aspire.Notification.Application\Aspire.Notification.Application.csproj" />
   </ItemGroup>
 
 </Project>
