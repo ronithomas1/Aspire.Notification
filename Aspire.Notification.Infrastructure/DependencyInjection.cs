@@ -1,4 +1,5 @@
-﻿using Aspire.Notification.Infrastructure.Database;
+﻿using Aspire.Notification.Application.Common.Interfaces;
+using Aspire.Notification.Infrastructure.Database;
 using Aspire.Notification.Infrastructure.Email;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
