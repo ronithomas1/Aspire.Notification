@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aspire.Notification.Application.Common.Interfaces
+namespace Aspire.Notification.Application.Common.Interfaces.Infrastructure
 {
     public interface IEmailSender
     {

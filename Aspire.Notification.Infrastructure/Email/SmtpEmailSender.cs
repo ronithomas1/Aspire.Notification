@@ -1,4 +1,4 @@
-﻿using Aspire.Notification.Application.Common.Interfaces;
+﻿using Aspire.Notification.Application.Common.Interfaces.Infrastructure;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using System;

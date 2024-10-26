@@ -1,5 +1,6 @@
-﻿using Aspire.Notification.Application.Common.Interfaces;
+﻿using Aspire.Notification.Application.Common.Interfaces.Infrastructure;
 using Aspire.Notification.Infrastructure.Database;
+using Aspire.Notification.Infrastructure.Database.Repositories;
 using Aspire.Notification.Infrastructure.Email;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,8 @@ namespace Aspire.Notification.Infrastructure
         {
             // This is the name of the sqlDatabase in AppHost
             builder.AddSqlServerDbContext<AspireContext>("Aspire-Notification");
+            builder.Services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
             return builder.Services;
         }
 
