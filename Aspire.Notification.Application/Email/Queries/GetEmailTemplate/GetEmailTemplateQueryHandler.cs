@@ -19,8 +19,10 @@ namespace Aspire.Notification.Application.Email.Queries.GetEmailTemplate
         }
 
         public async Task<EmailTemplateDto> Handle(GetEmailTemplateQuery request, CancellationToken cancellationToken)
-        {
-            var emailTemplate = await _templateRepository.GetTemplateAsync("Email", "Default");
+        {            
+            var emailTemplate = await _templateRepository.GetTemplateAsync(request.EmailTemplateRequest.Type, 
+            string.IsNullOrEmpty(request.EmailTemplateRequest.Name)?  
+                                "Default": request.EmailTemplateRequest.Name);
             var response = emailTemplate.Adapt<EmailTemplateDto>();
             return response;
         }

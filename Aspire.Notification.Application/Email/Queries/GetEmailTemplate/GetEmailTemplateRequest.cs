@@ -8,5 +8,7 @@ namespace Aspire.Notification.Application.Email.Queries.GetEmailTemplate
 {
     public class GetEmailTemplateRequest
     {
+        public required string Type { get; set; } = "Email";
+        public string? Name { get; set; }
     }
 }
