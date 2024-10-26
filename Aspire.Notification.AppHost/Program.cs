@@ -8,10 +8,11 @@ var sqlServer = builder
 // Adds intial catalog 'Aspire.Notification' to the connection string
 var sqlDatabase = sqlServer.AddDatabase("Aspire-Notification");
 
-
 var smtp = builder.AddSmtp4Dev("SmtpUri");
+
 builder.AddProject<Projects.Aspire_Notification_Api>("aspire-notification-api")
-       .WithReference(sqlDatabase);
+       .WithReference(sqlDatabase)
+       .WithReference(smtp); ;
 
 builder.AddProject<Projects.Aspire_Notification_Migrations_Worker>
     ("aspire-notification-migrations-worker")
