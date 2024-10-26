@@ -1,4 +1,5 @@
 ﻿using Aspire.Notification.Application.Common.Interfaces.Infrastructure;
+using Mapster;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -20,14 +21,7 @@ namespace Aspire.Notification.Application.Email.Queries.GetEmailTemplate
         public async Task<EmailTemplateDto> Handle(GetEmailTemplateQuery request, CancellationToken cancellationToken)
         {
             var emailTemplate = await _templateRepository.GetTemplateAsync("Email", "Default");
-
-            var  response = new EmailTemplateDto
-            {
-                From = emailTemplate.From,
-                DisplayName = emailTemplate.DisplayName,
-                IsActive = emailTemplate.IsActive,
-                NotificationTemplate = emailTemplate.NotificationTemplate
-            };
+            var response = emailTemplate.Adapt<EmailTemplateDto>();
             return response;
         }
     }
