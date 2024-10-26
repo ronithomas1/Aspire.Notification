@@ -10,7 +10,6 @@ namespace Aspire.Notification.Application.Email.Queries.GetEmailTemplate
     public record GetEmailTemplateQuery : IRequest<EmailTemplateDto>
     {
         public required string Type { get; set; } = "Email";
-        public string? Name { get; set; }
-      //  public required GetEmailTemplateRequest EmailTemplateRequest { get; set; }
+        public string? Name { get; set; }      
     }
 }
