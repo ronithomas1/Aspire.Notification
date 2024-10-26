@@ -1,4 +1,5 @@
 ﻿using Aspire.Notification.Application.Email.Commands.SendEmail;
+using Aspire.Notification.Application.Email.Queries.GetEmailTemplate;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,12 @@ namespace Aspire.Notification.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> SendEmail([FromBody] SendEmailRequest email)
         {
+            var emailTemplateRequest = new GetEmailTemplateRequest();
+            var existingTemplate = await _mediator.Send(new GetEmailTemplateQuery
+            {
+                EmailTemplateRequest = emailTemplateRequest
+            });
+
             await _mediator.Send(new SendEmailCommand { SendEmail = email });
             return Ok();
         }
