@@ -11,6 +11,9 @@ namespace Aspire.Notification.Application.Email.Commands.SendEmail
     {
         public async Task<Unit> Handle(SendEmailCommand request, CancellationToken cancellationToken)
         {
+            request.notificationTemplate = 
+                request.notificationTemplate.Replace("##CONTENT##", request.body);
+
             return Unit.Value;
         }
     }

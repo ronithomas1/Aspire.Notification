@@ -23,8 +23,15 @@ namespace Aspire.Notification.Api.Controllers
             var emailTemplateQuery = new GetEmailTemplateQuery() { Type="Email",
                Name=email.templateName};
             var existingTemplate = await _mediator.Send(emailTemplateQuery);
-
-            await _mediator.Send(new SendEmailCommand { SendEmail = email });
+           
+            await _mediator.Send(new SendEmailCommand {
+                To = email.Recipients.To,
+                Bcc = email.Recipients.Bcc,
+                Cc = email.Recipients.Cc,
+                subject = email.subject,
+                body = email.body,
+                notificationTemplate = existingTemplate.NotificationTemplate
+            });
             return Ok();
         }
     }
