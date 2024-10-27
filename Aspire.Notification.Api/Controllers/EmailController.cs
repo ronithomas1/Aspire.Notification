@@ -19,20 +19,13 @@ namespace Aspire.Notification.Api.Controllers
         [HttpPost()]
         [AllowAnonymous]
         public async Task<ActionResult> SendEmail([FromBody] SendEmailRequest email)
-        {
-            var emailTemplateQuery = new GetEmailTemplateQuery() { Type="Email",
-               Name=email.templateName};
-            var existingTemplate = await _mediator.Send(emailTemplateQuery);
-           
+        {                    
             await _mediator.Send(new SendEmailCommand {
-                From = existingTemplate.From,
                 To = email.Recipients.To,
                 Bcc = email.Recipients.Bcc,
                 Cc = email.Recipients.Cc,
                 subject = email.subject,
-                body = email.body,
-                notificationTemplate = existingTemplate.NotificationTemplate,
-                displayName = existingTemplate.DisplayName,
+                body = email.body         
             });
             return Ok();
         }

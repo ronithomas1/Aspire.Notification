@@ -30,8 +30,8 @@ namespace Aspire.Notification.Infrastructure.Email
             {
                 From = new MailAddress(from, displayName),
                 To = { toEmail },
-            //    CC = { ccEmail },
-            //    Bcc = { bccEmail },
+                CC = { ccEmail },
+                Bcc = { bccEmail },
                 Subject = subject,
                 Body = body,                
                 IsBodyHtml = true                
