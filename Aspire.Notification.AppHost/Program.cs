@@ -10,12 +10,16 @@ var sqlDatabase = sqlServer.AddDatabase("Aspire-Notification");
 
 var smtp = builder.AddSmtp4Dev("SmtpUri");
 
+
+
+var migrator = builder.AddProject<Projects.Aspire_Notification_Migrations_Worker>
+    ("aspire-notification-migrations-worker")
+      .WithReference(sqlDatabase)
+      .WaitFor(sqlServer); // <-- wait for db;
+
 builder.AddProject<Projects.Aspire_Notification_Api>("aspire-notification-api")
        .WithReference(sqlDatabase)
-       .WithReference(smtp); ;
-
-builder.AddProject<Projects.Aspire_Notification_Migrations_Worker>
-    ("aspire-notification-migrations-worker")
-      .WithReference(sqlDatabase);
+       .WaitForCompletion(migrator) // <-- wait until process is terminated
+       .WithReference(smtp);
 
 builder.Build().Run();
