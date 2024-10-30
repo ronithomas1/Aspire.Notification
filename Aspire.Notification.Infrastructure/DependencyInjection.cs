@@ -18,7 +18,7 @@ namespace Aspire.Notification.Infrastructure
        IHostApplicationBuilder builder, bool isDevelopment) =>
        services
            .AddDatabase(configuration, builder)
-           .AddEmail();
+           .AddEmail(isDevelopment);
 
         private static IServiceCollection AddDatabase(this IServiceCollection services, 
             IConfiguration configuration, IHostApplicationBuilder builder)
@@ -30,8 +30,10 @@ namespace Aspire.Notification.Infrastructure
             return builder.Services;
         }
 
-        private static IServiceCollection AddEmail(this IServiceCollection services)
+        private static IServiceCollection AddEmail(this IServiceCollection services,
+            bool isDevelopment)
         {
+            // Based on isDevelopment make the choice
             services.AddScoped<IEmailSender, SmtpEmailSender>();
             return services;
         }
