@@ -1,6 +1,7 @@
 using Aspire.Notification.Application;
 using Aspire.Notification.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
+using Serilog;
 using System.Diagnostics;
 
 namespace Aspire.Notification.Api;
@@ -28,7 +29,9 @@ public class Program
         var app = builder.Build();
 
         app.MapDefaultEndpoints();
+        app.UseSerilogRequestLogging();
 
+        app.UseExceptionHandler();
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

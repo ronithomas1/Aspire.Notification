@@ -8,6 +8,9 @@ using Microsoft.Extensions.ServiceDiscovery;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Serilog;
+using Serilog.Enrichers.Span;
+using Serilog.Exceptions;
 using System.Diagnostics;
 
 namespace Microsoft.Extensions.Hosting
@@ -19,6 +22,7 @@ namespace Microsoft.Extensions.Hosting
     {
         public static IHostApplicationBuilder AddServiceDefaults(this IHostApplicationBuilder builder)
         {
+            (builder as WebApplicationBuilder)?.AddCustomSerilog();
             builder.ConfigureOpenTelemetry();
 
             builder.AddDefaultHealthChecks();
@@ -57,7 +61,45 @@ namespace Microsoft.Extensions.Hosting
            );
             return builder;
         }
+        public static IHostBuilder AddCustomSerilog(this WebApplicationBuilder builder)
+        {
+            return builder.Host.UseSerilog((context, loggerConfig) =>
+            {
+                loggerConfig
+                    .ReadFrom.Configuration(context.Configuration)
+                    .WriteTo.Console() // to make optional set this in configuration for the asp.net core project
+                    .Enrich.WithExceptionDetails()
+                    .Enrich.FromLogContext()
+                    .Enrich.WithMachineName()
+                    .Enrich.With<ActivityEnricher>();
 
+                var otlpExporterEndpoint = context.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+                if (string.IsNullOrEmpty(otlpExporterEndpoint)) return;
+
+                loggerConfig  // same comment as above - can use configuration here too
+                    .WriteTo.OpenTelemetry(options =>
+                    {
+                        options.Endpoint = otlpExporterEndpoint;
+                        options.ResourceAttributes.Add("service.name", builder.Configuration["OTEL_SERVICE_NAME"]!);
+                        var headers = builder.Configuration["OTEL_EXPORTER_OTLP_HEADERS"]?.Split(',') ?? [];
+                        foreach (var header in headers)
+                        {
+                            var (key, value) = header.Split('=') switch
+                            {
+                            [string k, string v] => (k, v),
+                                var v => throw new Exception($"Invalid header format {v}")
+                            };
+
+                            options.Headers.Add(key, value);
+                        }
+                    });
+            });
+        }
+
+        private static readonly string[] _excludeFromTraces = [
+            "aspnetcore-browser-refresh.js",
+        "browserLink",
+       ];
         public static IHostApplicationBuilder ConfigureOpenTelemetry(this IHostApplicationBuilder builder)
         {
             builder.Logging.AddOpenTelemetry(logging =>
