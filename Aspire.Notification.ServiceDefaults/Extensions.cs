@@ -67,10 +67,13 @@ namespace Microsoft.Extensions.Hosting
             {
                 loggerConfig
                     .ReadFrom.Configuration(context.Configuration)
+                    //Todo Can move to appsettings-- Like J2
                     .WriteTo.Console() // to make optional set this in configuration for the asp.net core project
                     .Enrich.WithExceptionDetails()
                     .Enrich.FromLogContext()
                     .Enrich.WithMachineName()
+                    .Enrich.WithEnvironmentName()
+                    .Enrich.WithProperty("Application" , "Aspire.Notification.Api")
                     .Enrich.With<ActivityEnricher>();
 
                 var otlpExporterEndpoint = context.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
