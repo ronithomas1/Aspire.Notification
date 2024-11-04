@@ -67,8 +67,8 @@ namespace Microsoft.Extensions.Hosting
             {
                 loggerConfig
                     .ReadFrom.Configuration(context.Configuration)
-                    //Todo Can move to appsettings-- Like J2
-                    .WriteTo.Console() // to make optional set this in configuration for the asp.net core project
+                    //Can move to appsettings
+                   // .WriteTo.Console() // to make optional set this in configuration for the asp.net core project
                     //.Enrich.WithExceptionDetails()
                     //.Enrich.FromLogContext()
                     //.Enrich.WithMachineName()
