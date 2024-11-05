@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Aspire.Notification.ServiceDefaults\Aspire.Notification.ServiceDefaults.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>
