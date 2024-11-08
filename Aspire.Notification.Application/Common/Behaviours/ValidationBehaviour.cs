@@ -14,7 +14,7 @@ namespace Aspire.Notification.Application.Common.Behaviours
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
         public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
-        {
+        {   
             _validators = validators;
         }
 
@@ -34,7 +34,7 @@ namespace Aspire.Notification.Application.Common.Behaviours
                     .ToList();
 
                 if (failures.Any())
-                    throw new ValidationException(failures);
+                    throw new Exceptions.ValidationException(failures);
             }
             return await next();
         }

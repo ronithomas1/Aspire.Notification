@@ -24,14 +24,7 @@ namespace Aspire.Notification.Application.Email.Commands.SendEmail
         {
             var emailTemplate = await _templateRepository.GetTemplateAsync("Email",
             string.IsNullOrEmpty(request.templateName) ?
-                                "Default" : request.templateName);
-
-            var validator = new SendEmailCommandValidator();
-            var validationResult = await validator.ValidateAsync(request);
-            if(validationResult.Errors.Count > 0)
-            {
-                throw new ValidationException(validationResult.Errors);
-            }
+                                "Default" : request.templateName);          
 
             var response = emailTemplate.Adapt<EmailTemplateDto>();
             var htmlContent = response.NotificationTemplate.Replace("##CONTENT##", request.body);
