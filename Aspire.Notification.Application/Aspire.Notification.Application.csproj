@@ -8,16 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.Result" Version="10.0.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Aspire.Notification.Domain\Aspire.Notification.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\Behaviours\" />
   </ItemGroup>
 
 </Project>

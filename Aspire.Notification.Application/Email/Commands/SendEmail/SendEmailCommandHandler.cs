@@ -1,4 +1,5 @@
-﻿using Aspire.Notification.Application.Common.Interfaces.Infrastructure;
+﻿using Aspire.Notification.Application.Common.Exceptions;
+using Aspire.Notification.Application.Common.Interfaces.Infrastructure;
 using Mapster;
 using MediatR;
 using System;
@@ -24,6 +25,14 @@ namespace Aspire.Notification.Application.Email.Commands.SendEmail
             var emailTemplate = await _templateRepository.GetTemplateAsync("Email",
             string.IsNullOrEmpty(request.templateName) ?
                                 "Default" : request.templateName);
+
+            var validator = new SendEmailCommandValidator();
+            var validationResult = await validator.ValidateAsync(request);
+            if(validationResult.Errors.Count > 0)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
             var response = emailTemplate.Adapt<EmailTemplateDto>();
             var htmlContent = response.NotificationTemplate.Replace("##CONTENT##", request.body);
             var displayName = response.DisplayName;

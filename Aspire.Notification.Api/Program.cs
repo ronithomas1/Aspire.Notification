@@ -1,4 +1,5 @@
 using Aspire.Notification.Api.Extensions;
+using Aspire.Notification.Api.Infrastructure;
 using Aspire.Notification.Application;
 using Aspire.Notification.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
@@ -26,6 +27,8 @@ public class Program
             builder.Environment.IsDevelopment());
         builder.Services
             .AddApplicationServices();
+
+        builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
         var app = builder.Build();
 
