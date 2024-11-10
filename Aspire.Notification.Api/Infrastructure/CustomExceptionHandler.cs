@@ -1,28 +1,33 @@
 ﻿using Aspire.Notification.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
+using System;
 
 namespace Aspire.Notification.Api.Infrastructure
 {
     public class CustomExceptionHandler : IExceptionHandler
     {
         private readonly Dictionary<Type, Func<HttpContext, Exception, Task>> _exceptionHandlers;
-
-        public CustomExceptionHandler()
+        private readonly ILogger<CustomExceptionHandler> _logger;
+        // Handle only known exceptions - Unhandled exception is done in the 'Service Defaults'
+        public CustomExceptionHandler(ILogger<CustomExceptionHandler> logger)
         {
+            _logger = logger;
             // Register known exception types and handlers.
             _exceptionHandlers = new()
             {
-                { typeof(ValidationException), HandleValidationException },
+                    { typeof(ValidationException), HandleValidationException },
            //     { typeof(NotFoundException), HandleNotFoundException },
            //     { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
            //     { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                 
             };
         }
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            var exceptionType = exception.GetType();
+             var exceptionType = exception.GetType();
 
             if (_exceptionHandlers.ContainsKey(exceptionType))
             {
@@ -38,51 +43,58 @@ namespace Aspire.Notification.Api.Infrastructure
             var exception = (ValidationException)ex;
 
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            foreach (var exp in exception.Errors)
+            {
+                _logger.LogError("Validation Exception Occured for {key} -  {reason} ", exp.Key ,exp.Value );
+            }
 
             await httpContext.Response.WriteAsJsonAsync(new ValidationProblemDetails(exception.Errors)
             {
+                Title = ex.Message,
                 Status = StatusCodes.Status400BadRequest,
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
             });
         }
 
-        //private async Task HandleNotFoundException(HttpContext httpContext, Exception ex)
-        //{
-        //    var exception = (NotFoundException)ex;
+        
 
-        //    httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            //private async Task HandleNotFoundException(HttpContext httpContext, Exception ex)
+            //{
+            //    var exception = (NotFoundException)ex;
 
-        //    await httpContext.Response.WriteAsJsonAsync(new ProblemDetails()
-        //    {
-        //        Status = StatusCodes.Status404NotFound,
-        //        Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-        //        Title = "The specified resource was not found.",
-        //        Detail = exception.Message
-        //    });
-        //}
+            //    httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
 
-        //private async Task HandleUnauthorizedAccessException(HttpContext httpContext, Exception ex)
-        //{
-        //    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            //    await httpContext.Response.WriteAsJsonAsync(new ProblemDetails()
+            //    {
+            //        Status = StatusCodes.Status404NotFound,
+            //        Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            //        Title = "The specified resource was not found.",
+            //        Detail = exception.Message
+            //    });
+            //}
 
-        //    await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
-        //    {
-        //        Status = StatusCodes.Status401Unauthorized,
-        //        Title = "Unauthorized",
-        //        Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
-        //    });
-        //}
+            //private async Task HandleUnauthorizedAccessException(HttpContext httpContext, Exception ex)
+            //{
+            //    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
-        //private async Task HandleForbiddenAccessException(HttpContext httpContext, Exception ex)
-        //{
-        //    httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+            //    await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
+            //    {
+            //        Status = StatusCodes.Status401Unauthorized,
+            //        Title = "Unauthorized",
+            //        Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
+            //    });
+            //}
 
-        //    await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
-        //    {
-        //        Status = StatusCodes.Status403Forbidden,
-        //        Title = "Forbidden",
-        //        Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
-        //    });
-        //}
-    }
+            //private async Task HandleForbiddenAccessException(HttpContext httpContext, Exception ex)
+            //{
+            //    httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+
+            //    await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
+            //    {
+            //        Status = StatusCodes.Status403Forbidden,
+            //        Title = "Forbidden",
+            //        Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
+            //    });
+            //}
+        }
 }
